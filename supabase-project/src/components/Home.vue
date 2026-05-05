@@ -4,6 +4,15 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted } from 'vue'
+import { supabase } from '../supabase'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+
+
+</script>
 
 <style scoped></style>
