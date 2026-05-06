@@ -1,19 +1,15 @@
 <template>
   <div>
-    <h1>Genshin Impact Capybara Cafe</h1>
-    <p> ✦✦✦ </p>
+    <h1 class="website__title">Genshin Impact Capybara Cafe</h1>
   </div>
 </template>
 
-<script setup>
-import { onMounted } from 'vue'
-import { supabase } from '../supabase'
-import { useRouter } from 'vue-router'
+<script setup></script>
 
-const router = useRouter()
-
-
-
-</script>
-
-<style scoped></style>
+<style scoped>
+.website__title {
+  text-align: center;
+  font-family: 'Darumadrop One', sans-serif;
+  font-size: 67px;
+}
+</style>

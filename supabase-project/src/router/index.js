@@ -1,29 +1,36 @@
-import Cafe from '@/views/cafe.vue'
-import Home from '@/views/home.vue'
-import Shop from '@/views/shop.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../components/Home.vue'
+import Bill from '../components/Bill.vue'
+import CustomerCard from '../components/CustomerCard.vue'
+import Drink from '../components/Drink.vue'
+import IngredientButton from '../components/IngredientButton.vue'
 
 const routes = [
   {
-    path : "/",
-    name : "home",
+    path : '/',
     component : Home,
   },
   {
-    path : "/cafe",
-    name : "cafe",
-    component : Cafe
+    path: '/bill',
+    component : Bill,
   },
   {
-    path : '/shop',
-    name : 'shop',
-    component: Shop,
-  }
+    path: '/customercard',
+    component : CustomerCard,
+  },
+  {
+    path: '/drink',
+    component : Drink,
+  },
+  {
+    path: '/ingredientbutton',
+    component : IngredientButton,
+  },
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [],
+  history: createWebHistory(),
+  routes,
 })
 
 export default router
