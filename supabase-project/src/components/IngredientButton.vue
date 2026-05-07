@@ -1,5 +1,37 @@
 <template>
-  <div></div>
+  <div>
+    <h2>Bases</h2>
+    <button
+      v-for="item in Base":key="item.name"@click="selectitem(item)">
+      {{ item.name }} - ${{ item.price }}
+    </button>
+    <h2>Ingredients</h2>
+    <button v-for="item in Ingredients" :key="item.name"@click="selectitem(item)">
+      {{ item.name }} - ${{ item.price }}
+    </button>
+    <h2>Cut Size</h2>
+    <button v-for="item in cutsize" :key="item.name" @click="selectitem(item)">
+      {{ item.name }}
+    </button>
+    <h2>Shake Intensity</h2>
+    <button v-for="item in Shakeintensity" :key="item.name" @click="selectitem(item)">
+      {{ item.name }}
+    </button>
+    <h2>Cup Size</h2>
+    <button v-for="item in Cupsize":key="item.name"@click="selectitem(item)">
+      {{ item.name }}
+    </button>
+    <h2>Toppings</h2>
+    <button v-for="item in Toppings":key="item.name"@click="selectitem(item)" >
+      {{ item.name }}
+    </button>
+    <h3>Current Drink</h3>
+    <ul>
+      <li v-for="item in selecteddrink" :key="item.name">
+        {{ item.name }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script setup>
@@ -42,6 +74,14 @@ const Toppings = [
   {name :"Valberry", price:0, type:"Toppings"},
   {name :"Small Lamp Grass", price:0, type:"Toppings"},
 ]
+import { ref } from 'vue'
+const emit = defineEmits(['addingredient'])
+const selecteddrink = ref([])
+const selectitem = (item) => {
+  selecteddrink.value.push(item)
+  emit('addingredient', item)
+} 
+
 </script>
 
 <style scoped></style>
