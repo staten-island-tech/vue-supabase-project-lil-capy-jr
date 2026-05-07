@@ -1,7 +1,11 @@
 <template>
-  <div></div>
+  <div class = "bill">
+
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+</script>
 
-<style scoped></style>
+<style scoped>
+</style>
