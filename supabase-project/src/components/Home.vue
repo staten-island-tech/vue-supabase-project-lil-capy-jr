@@ -1,18 +1,38 @@
 <template>
-  <div>
-    <h1>Genshin Impact Capybara Cafe</h1>
+  <div class="website">
+    <h1 class="website__title">Genshin Impact Capybara Cafe</h1>
+    <button class="play__button">Play</button>
   </div>
 </template>
 
-<script setup>
-import { onMounted } from 'vue'
-import { supabase } from '../supabase'
-import { useRouter } from 'vue-router'
+<script setup></script>
 
-const router = useRouter()
+<style scoped>
+.website {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  margin: 0;
+}
 
+.website__title {
+  text-align: center;
+  font-family: 'Darumadrop One', sans-serif;
+  font-size: 67px;
+  margin: 0;
+  text-shadow: 5px 2px 5px black;
+}
 
-
-</script>
-
-<style scoped></style>
+.play__button {
+  font-family: 'Darumadrop One', sans-serif;
+  background-color: #c63b49;
+  font-size: 25px;
+  border-radius: 1rem;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 4px;
+  margin: 1rem;
+}
+</style>
