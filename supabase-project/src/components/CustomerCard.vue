@@ -1,6 +1,9 @@
 <template>
-  <div>
-
+  <div class = "characters">
+    <div class = "characterimage">
+      <img  v-if="randomcharacter" :src="`https://genshin.jmp.blue/characters/${randomCharacter}/icon`":alt="randomcharacter">
+    </div>
+    <div class = "characterdrink"></div>
   </div>
 </template>
 
@@ -12,6 +15,8 @@ async function getcharacters(){
     const response = await fetch('https://genshin.jmp.blue/characters')
     const data = await response.json()
     characters.value = data
+    const randomindex = Math.floor(Math.random()*data.length)
+    randomcharacter.value = data[randomindex]
   } catch (err){
     console.log("Failed to load characters")
   }
@@ -21,5 +26,8 @@ onMounted(() => {
 })
 
 </script>
-
-<style scoped></style>
+<style scoped>
+img {
+  width: 150px;
+}
+</style>
