@@ -3,4 +3,6 @@ body {
   font-family: 'Elms Sans', sans-serif;
   font-weight: 400;
   font-style: normal;
+  background-image: url('supabase background.png');
+  color: white;
 }

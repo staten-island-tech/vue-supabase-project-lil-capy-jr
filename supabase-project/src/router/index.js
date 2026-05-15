@@ -3,7 +3,6 @@ import Home from '../components/Home.vue'
 import Bill from '../components/Bill.vue'
 import CustomerCard from '../components/CustomerCard.vue'
 import Drink from '../components/Drink.vue'
-import IngredientButton from '../components/IngredientButton.vue'
 
 const routes = [
   {
@@ -21,10 +20,6 @@ const routes = [
   {
     path: '/drink',
     component : Drink,
-  },
-  {
-    path: '/ingredientbutton',
-    component : IngredientButton,
   },
 ]
 

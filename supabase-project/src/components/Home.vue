@@ -15,17 +15,24 @@
   align-items: center;
   height: 80vh;
   margin: 0;
-  background-image: url("background.jpg");
 }
 
 .website__title {
   text-align: center;
   font-family: 'Darumadrop One', sans-serif;
   font-size: 67px;
+  margin: 0;
+  text-shadow: 5px 2px 5px black;
 }
 
 .play__button {
   font-family: 'Darumadrop One', sans-serif;
   background-color: #c63b49;
+  font-size: 25px;
+  border-radius: 1rem;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 4px;
+  margin: 1rem;
 }
 </style>

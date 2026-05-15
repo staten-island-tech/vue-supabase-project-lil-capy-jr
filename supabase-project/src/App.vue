@@ -21,9 +21,13 @@
 .router {
   margin: 2rem;
   text-align: center;
+  color: white;
+  text-decoration: none;
 }
 
-.router__link{
+.router__link {
   padding: 2rem;
+  color: white;
+  text-decoration: none;
 }
 </style>
