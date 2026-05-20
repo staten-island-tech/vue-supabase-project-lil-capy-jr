@@ -5,8 +5,12 @@ import CustomerCard from '../components/CustomerCard.vue'
 import Drink from '../components/Drink.vue'
 
 const routes = [
-  {
+    {
     path : '/',
+    component : Login,
+  },
+  {
+    path : '/home',
     component : Home,
   },
   {
