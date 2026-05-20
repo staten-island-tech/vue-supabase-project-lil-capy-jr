@@ -1,18 +1,18 @@
 <template>
   <div class = "order">
-    <li><strong>Base:</strong></li>
-    <li><strong>ingredients:</strong></li>
-    <li><strong>ingredients:</strong></li>
-    <li><strong>Cut Size:</strong></li>
-    <li><strong>Shake Intensity:</strong></li>
-    <li><strong>Cup Size:</strong></li>
-    <li><strong>Toppings:</strong></li>
+    <li><strong>Base: {{ order.base }}</strong></li>
+    <li><strong>ingredients: {{ order.ingredient }}</strong></li>
+    <li><strong>Cut Size: {{ order.cutsize }}</strong></li>
+    <li><strong>Shake Intensity: {{ order.shakeintensity}}</strong></li>
+    <li><strong>Cup Size: {{ order.cupsize}}</strong></li>
+    <li><strong>Toppings: {{ order.toppings}}</strong></li>
     <li><strong></strong></li>
 
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 const Base = [
   {name :"Milk", price:2, type:"base"},
   {name :"Tea", price:2, type:"base"},
@@ -30,7 +30,7 @@ const Ingredients = [
   {name :"Cocoa", price:1, type:"ingredients"},
   {name :"Wolfhook", price:1, type:"ingredients"},
 ]
-const cutsize = [
+const Cutsize = [
   {name :"Large Pieces", price:0, type:"Cutsize"},
   {name :"Small Pieces", price:0, type:"Cutsize"},
   {name :"Small Bits", price:0, type:"Cutsize"},
@@ -52,11 +52,18 @@ const Toppings = [
   {name :"Valberry", price:0, type:"Toppings"},
   {name :"Small Lamp Grass", price:0, type:"Toppings"},
 ]
-
-function randombase(Base){
-  return Base[Math.floor(Math.random()* Base.length)]
+function Random(arr) {
+  return arr[Math.floor(Math.random() * arr.length)].name
 }
 
+const order = ref({
+  base: Random(Base),
+  ingredient: Random(Ingredients),
+  cutsize: Random(Cutsize),
+  shakeintensity: Random(Shakeintensity),
+  cupsize: Random(Cupsize),
+  toppings: Random(Toppings),
+})
 </script>
 
 <style scoped>
