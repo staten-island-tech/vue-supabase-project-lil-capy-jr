@@ -5,6 +5,7 @@
 </template>
 
 <script setup>
+import moneyamount from './moneyamount.vue';
 </script>
 
 <style scoped>
