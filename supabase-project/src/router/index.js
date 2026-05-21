@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../components/Home.vue'
-import Bill from '../components/Bill.vue'
 import CustomerCard from '../components/CustomerCard.vue'
-import Drink from '../components/Drink.vue'
+import cafe from '@/views/cafe.vue'
+import shop from '@/views/shop.vue'
+import Drink from '@/components/Drink.vue'
+
 
 const routes = [
   {
@@ -10,12 +12,16 @@ const routes = [
     component : Home,
   },
   {
-    path: '/bill',
-    component : Bill,
+    path: '/cafe',
+    component : cafe,
   },
   {
     path: '/customercard',
     component : CustomerCard,
+  },
+  {
+    path: '/shop',
+    component : shop,
   },
   {
     path: '/drink',
