@@ -83,6 +83,7 @@ const selectitem = (item) => {
   emit('addingredient', item)
 } 
 
+
 </script>
 
 <style scoped></style>

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import home from '@/components/home.vue'
+import home from '@/components/Home.vue'
 import CustomerCard from '../components/CustomerCard.vue'
 import cafe from '@/views/cafe.vue'
 import shop from '@/views/shop.vue'
