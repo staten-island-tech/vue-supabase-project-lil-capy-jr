@@ -31,6 +31,7 @@
         {{ item.name }}
       </li>
     </ul>
+    <button>Submit</button>
   </div>
 </template>
 

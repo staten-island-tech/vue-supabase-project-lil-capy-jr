@@ -4,6 +4,7 @@ import CustomerCard from '../components/CustomerCard.vue'
 import cafe from '@/views/cafe.vue'
 import shop from '@/views/shop.vue'
 import Drink from '@/components/Drink.vue'
+import Ingredient from '@/components/Ingredient.vue'
 
 
 const routes = [
@@ -27,6 +28,11 @@ const routes = [
     path: '/drink',
     component : Drink,
   },
+  {
+    path: '/ingredients',
+    component : Ingredient,
+  },
+
 ]
 
 const router = createRouter({

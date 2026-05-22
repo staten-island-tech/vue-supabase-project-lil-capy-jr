@@ -5,7 +5,7 @@
         <strong>Base: {{ order.base.name }}</strong>
       </li>
       <li>
-        <strong>ingredients: {{ order.ingredient.name }}</strong>
+        <strong>Ingredients: {{ order.ingredient.name }}</strong>
       </li>
       <li>
         <strong>Cut Size: {{ order.cutsize.name }}</strong>
