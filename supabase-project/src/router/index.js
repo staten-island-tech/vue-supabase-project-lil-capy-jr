@@ -32,7 +32,6 @@ const routes = [
     path: '/ingredients',
     component : Ingredient,
   },
-
 ]
 
 const router = createRouter({
