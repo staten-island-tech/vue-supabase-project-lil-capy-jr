@@ -8,7 +8,7 @@ import Ingredient from '@/components/Ingredient.vue'
 
 
 const routes = [
-  {
+    {
     path : '/',
     component : home,
   },
