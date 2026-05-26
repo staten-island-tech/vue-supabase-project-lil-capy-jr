@@ -3,6 +3,7 @@
     <div class = "characterimage">
       <img  v-if="randomcharacter" :src="`https://genshin.jmp.blue/characters/${randomCharacter}/icon`":alt="randomcharacter">
     </div>
+    
     <div class = "characterdrink"></div>
   </div>
 </template>

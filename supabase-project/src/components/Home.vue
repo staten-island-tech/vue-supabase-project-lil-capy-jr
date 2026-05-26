@@ -1,7 +1,7 @@
 <template>
   <div class="website">
     <h1 class="website__title">Genshin Impact Capybara Cafe</h1>
-    <button class="play__button">Play</button>
+    <RouterLink class="play__button" to="/cafe">Play</RouterLink>
   </div>
 </template>
 
