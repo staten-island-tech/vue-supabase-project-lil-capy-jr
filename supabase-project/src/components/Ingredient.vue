@@ -96,6 +96,10 @@ const selectitem = (item) => {
 </script>
 
 <style scoped>
+div {
+  text-align: center;
+}
+
 .base__title {
   text-align: center;
   font-family: 'Darumadrop One', sans-serif;
@@ -150,5 +154,17 @@ const selectitem = (item) => {
   font-size: 35px;
   margin: 0;
   text-shadow: 5px 2px 5px black;
+}
+
+button {
+  font-family: 'Darumadrop One', sans-serif;
+  background-color: #c63b49;
+  font-size: 15px;
+  border-radius: 1rem;
+  border-color: transparent;
+  padding: 0 30px 7px 30px;
+  margin: 1rem;
+  text-decoration: none;
+  color: #ffffff;
 }
 </style>
