@@ -25,14 +25,16 @@
   text-shadow: 5px 2px 5px black;
 }
 
-.play__button {
+.play__button:link,
+.play__button:visited {
   font-family: 'Darumadrop One', sans-serif;
   background-color: #c63b49;
   font-size: 25px;
   border-radius: 1rem;
-  padding-left: 30px;
-  padding-right: 30px;
-  padding-bottom: 4px;
+  padding: 0 30px 7px 30px;
   margin: 1rem;
+  text-decoration: none;
+  color: #ffffff;
 }
+
 </style>
