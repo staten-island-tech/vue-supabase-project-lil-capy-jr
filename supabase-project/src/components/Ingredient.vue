@@ -86,13 +86,7 @@ const selecteddrink = ref([])
 const selectitem = (item) => {
   selecteddrink.value.push(item)
   emit('addingredient', item)
-<<<<<<< HEAD
 } 
-
-
-=======
-}
->>>>>>> main
 </script>
 
 <style scoped>
