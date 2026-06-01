@@ -36,6 +36,7 @@
         {{ item.name }}
       </li>
     </ul>
+    <button>Submit</button>
   </div>
 </template>
 
@@ -85,7 +86,7 @@ const selecteddrink = ref([])
 const selectitem = (item) => {
   selecteddrink.value.push(item)
   emit('addingredient', item)
-}
+} 
 </script>
 
 <style scoped>
