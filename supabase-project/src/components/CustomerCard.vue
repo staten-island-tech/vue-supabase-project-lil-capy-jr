@@ -29,7 +29,12 @@ onMounted(() => {
 
 </script>
 <style scoped>
-img {
-  width: 150px;
+div {
+  text-align: center;
 }
+
+img {
+  width: 300px;
+}
+
 </style>
