@@ -1,7 +1,7 @@
 <template>
   <div class = "characters">
     <div class = "characterimage">
-      <img  v-if="randomcharacter" :src="`https://genshin.jmp.blue/characters/${randomCharacter}/icon`":alt="randomcharacter">
+      <img  v-if="randomcharacter" :src="`https://genshin.jmp.blue/characters/${randomcharacter}/icon`":alt="randomcharacter">
     </div>
     
     <div class = "characterdrink"></div>
