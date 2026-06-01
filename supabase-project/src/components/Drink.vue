@@ -1,24 +1,24 @@
 <template>
   <div class="order">
     <ul>
-      <li>
+      <h3>
         <strong>Base: {{ order.base.name }}</strong>
-      </li>
-      <li>
+      </h3>
+      <h3>
         <strong>Ingredients: {{ order.ingredient.name }}</strong>
-      </li>
-      <li>
+      </h3>
+      <h3>
         <strong>Cut Size: {{ order.cutsize.name }}</strong>
-      </li>
-      <li>
+      </h3>
+      <h3>
         <strong>Shake Intensity: {{ order.shakeintensity.name }}</strong>
-      </li>
-      <li>
+      </h3>
+      <h3>
         <strong>Cup Size: {{ order.cupsize.name }}</strong>
-      </li>
-      <li>
+      </h3>
+      <h3>
         <strong>Toppings: {{ order.toppings.name}}</strong>
-      </li>
+      </h3>
       <h2>Total = ${{ totalprice }}</h2>
     </ul>
   </div>
@@ -86,4 +86,16 @@ const totalprice = computed(() => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.order {
+  text-align: center;
+  width: 500px;
+  height: 300px;
+  background-color: black;
+}
+
+h3 {
+  font-size: 14px;
+  line-height: 14px;
+}
+</style>
