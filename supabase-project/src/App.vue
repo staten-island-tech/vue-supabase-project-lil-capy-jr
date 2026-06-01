@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+/* import { ref, onMounted } from 'vue'
 import { supabase } from './lib/supabaseClient'
 
 const instruments = ref([])
@@ -27,7 +27,7 @@ async function getInstruments() {
 
 onMounted(() => {
    getInstruments()
-})
+}) */
 </script>
 
 
