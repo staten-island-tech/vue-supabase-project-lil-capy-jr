@@ -11,6 +11,7 @@
 <script setup>
 import { ref, onMounted } from "vue"
 const characters = ref([])
+const randomcharacter = ref(null)
 async function getcharacters(){
   try {
     const response = await fetch('https://genshin.jmp.blue/characters')
