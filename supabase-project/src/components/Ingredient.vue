@@ -1,46 +1,54 @@
 <template>
   <div>
-    <h2 class="base__title">Bases</h2>
+    <h2 class="basetitle">Bases</h2>
     <button v-for="item in Base" :key="item.name" @click="selectitem(item)">
       {{ item.name }} - ${{ item.price }}
     </button>
 
-    <h2 class="ingredients__title">Ingredients</h2>
+    <h2 class="ingredientstitle">Ingredients</h2>
     <button v-for="item in Ingredients" :key="item.name" @click="selectitem(item)">
       {{ item.name }} - ${{ item.price }}
     </button>
 
-    <h2 class="cutsize__title">Cut Size</h2>
+    <h2 class="cutsizetitle">Cut Size</h2>
     <button v-for="item in cutsize" :key="item.name" @click="selectitem(item)">
       {{ item.name }}
     </button>
 
-    <h2 class="shakeintensity__title">Shake Intensity</h2>
+    <h2 class="shakeintensitytitle">Shake Intensity</h2>
     <button v-for="item in Shakeintensity" :key="item.name" @click="selectitem(item)">
       {{ item.name }}
     </button>
 
-    <h2 class="cupsize__title">Cup Size</h2>
+    <h2 class="cupsizetitle">Cup Size</h2>
     <button v-for="item in Cupsize" :key="item.name" @click="selectitem(item)">
       {{ item.name }}
     </button>
 
-    <h2 class="toppings__title">Toppings</h2>
+    <h2 class="toppingstitle">Toppings</h2>
     <button v-for="item in Toppings" :key="item.name" @click="selectitem(item)">
       {{ item.name }}
     </button>
-
-    <h3 class="current__drink">Current Drink</h3>
+    <h3 class="currentdrink">Current Drink</h3>
     <ul>
-      <li v-for="item in selecteddrink" :key="item.name">
-        {{ item.name }}
-      </li>
+      <li>Base: {{ selected.base }}</li>
+      <li>Ingredient: {{ selected.ingredients }}</li>
+      <li>Cut Size: {{ selected.Cutsize }}</li>
+      <li>Shake Intensity: {{ selected.Shakeintensity }}</li>
+      <li>Cup Size: {{ selected.Cupsize }}</li>
+      <li>Topping: {{ selected.Toppings }}</li>
     </ul>
-    <button>Submit</button>
+    <button @click="submitdrink">Submit</button>
+    <h2>{{ result }}</h2>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+const props = defineProps({
+  order: Object
+})
+
 const Base = [
   { name: 'Milk', price: 2, type: 'base' },
   { name: 'Tea', price: 2, type: 'base' },
@@ -80,13 +88,25 @@ const Toppings = [
   { name: 'Valberry', price: 0, type: 'Toppings' },
   { name: 'Small Lamp Grass', price: 0, type: 'Toppings' },
 ]
-import { ref } from 'vue'
-const emit = defineEmits(['addingredient'])
-const selecteddrink = ref([])
-const selectitem = (item) => {
-  selecteddrink.value.push(item)
-  emit('addingredient', item)
-} 
+const selected = ref({
+  base: '',
+  ingredients: '',
+  Cutsize: '',
+  Shakeintensity: '',
+  Cupsize: '',
+  Toppings: '',
+})
+const result = ref('')
+
+function selectitem(item) {
+  selected.value[item.type] = item.name
+}
+function submitdrink() {
+  const correct =
+    selected.value.base === props.order.base.name && selected.value.ingredients === props.order.ingredient.name && selected.value.Cutsize === props.order.cutsize.name && selected.value.Shakeintensity === props.order.shakeintensity.name && selected.value.Cupsize === props.order.cupsize.name && selected.value.Toppings === props.order.toppings.name
+  result.value = correct ? 'YES!' : 'NO'
+}
+
 </script>
 
 <style scoped>
