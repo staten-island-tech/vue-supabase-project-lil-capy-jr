@@ -31,8 +31,9 @@ const props = defineProps({
 })
 
 const totalprice = computed(() => {
-  const subtotal = order.value.base.price + order.value.ingredient.price + order.value.cutsize.price +  order.value.shakeintensity.price + order.value.cupsize.price +order.value.toppings.price
-  const totalWithTax = subtotal * 1.08875
+  const subtotal = props.order.base.price + props.order.ingredient.price +
+    props.order.cutsize.price + props.order.shakeintensity.price +
+    props.order.cupsize.price + props.order.toppings.price
   return (subtotal * 1.08875).toFixed(2)
 })
 </script>

@@ -14,6 +14,14 @@
 import CustomerCard from '@/components/CustomerCard.vue';
 import Drink from '@/components/Drink.vue';
 import Ingredient from '@/components/Ingredient.vue';
+import { ref } from 'vue'
+
+const Base = [
+  { name: 'Milk', price: 2, type: 'base' },
+  { name: 'Tea', price: 2, type: 'base' },
+  { name: 'Firewater', price: 3, type: 'base' },
+  { name: 'Fruitwine', price: 4, type: 'base' },
+]
 
 const Ingredients = [
   { name: 'Romaritime Flower Juice', price: 3, type: 'ingredients' },
