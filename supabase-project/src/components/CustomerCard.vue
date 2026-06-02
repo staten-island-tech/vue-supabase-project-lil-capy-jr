@@ -3,7 +3,7 @@
     <div class = "characterimage">
       <img  v-if="randomcharacter" :src="`https://genshin.jmp.blue/characters/${randomcharacter}/icon`":alt="randomcharacter">
     </div>
-    
+   
     <div class = "characterdrink"></div>
   </div>
 </template>
@@ -27,15 +27,12 @@ onMounted(() => {
   getcharacters()
 })
 
+
 </script>
 <style scoped>
-div {
-  text-align: center;
-}
-
 img {
-  width: 200px;
+  width: 150px;
 }
-
-
 </style>
+
+
