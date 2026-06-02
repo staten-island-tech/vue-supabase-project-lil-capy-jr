@@ -1,26 +1,29 @@
 <template>
   <div class="order">
-    <ul>
-      <h3>
-        <strong>Base: {{ order.base.name }}</strong>
-      </h3>
-      <h3>
-        <strong>Ingredients: {{ order.ingredient.name }}</strong>
-      </h3>
-      <h3>
-        <strong>Cut Size: {{ order.cutsize.name }}</strong>
-      </h3>
-      <h3>
-        <strong>Shake Intensity: {{ order.shakeintensity.name }}</strong>
-      </h3>
-      <h3>
-        <strong>Cup Size: {{ order.cupsize.name }}</strong>
-      </h3>
-      <h3>
-        <strong>Toppings: {{ order.toppings.name}}</strong>
-      </h3>
-      <h2>Total = ${{ totalprice }}</h2>
-    </ul>
+    <div class="order__container">
+      <h2>Order</h2>
+      <ul>
+        <h3>
+          <normal>Base: {{ order.base.name }}</normal>
+        </h3>
+        <h3>
+          <normal>Ingredients: {{ order.ingredient.name }}</normal>
+        </h3>
+        <h3>
+          <normal>Cut Size: {{ order.cutsize.name }}</normal>
+        </h3>
+        <h3>
+          <normal>Shake Intensity: {{ order.shakeintensity.name }}</normal>
+        </h3>
+        <h3>
+          <normal>Cup Size: {{ order.cupsize.name }}</normal>
+        </h3>
+        <h3>
+          <normal>Toppings: {{ order.toppings.name }}</normal>
+        </h3>
+        <h2>Total = ${{ totalprice }}</h2>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -39,15 +42,27 @@ const totalprice = computed(() => {
 </script>
 
 <style scoped>
-.order {
-  text-align: center;
-  width: 500px;
-  height: 300px;
+.order__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: black;
-}
-
-h3 {
   font-size: 14px;
   line-height: 14px;
 }
+
+.order__container ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style-type: none;
+  padding: 0;
+}
+
+.order__container h3 {
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
 </style>
