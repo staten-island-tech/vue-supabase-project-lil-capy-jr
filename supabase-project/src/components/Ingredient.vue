@@ -103,10 +103,18 @@ function selectitem(item) {
 }
 function submitdrink() {
   const correct =
-    selected.value.base === props.order.base.name && selected.value.ingredients === props.order.ingredient.name && selected.value.Cutsize === props.order.cutsize.name && selected.value.Shakeintensity === props.order.shakeintensity.name && selected.value.Cupsize === props.order.cupsize.name && selected.value.Toppings === props.order.toppings.name
-  result.value = correct ? 'YES!' : 'NO'
+    selected.value.base === props.order.base.name &&
+    selected.value.ingredients === props.order.ingredient.name &&
+    selected.value.Cutsize === props.order.cutsize.name &&
+    selected.value.Shakeintensity === props.order.shakeintensity.name &&
+    selected.value.Cupsize === props.order.cupsize.name &&
+    selected.value.Toppings === props.order.toppings.name
+  if (correct) {
+    result.value = 'YES!'
+  } else {
+    result.value = 'NO'
+  }
 }
-
 </script>
 
 <style scoped>
