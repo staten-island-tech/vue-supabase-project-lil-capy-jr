@@ -31,7 +31,8 @@ onMounted(() => {
 </script>
 <style scoped>
 img {
-  width: 150px;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 
