@@ -5,7 +5,29 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { supabase } from '@/lib/supabaseClient';
+
+const router = useRouter()
+
+const form = reactive ({
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+})
+
+const errorMessage = ref('')
+const successMessage = ref('')
+const loading = ref(false)
+
+async function register() {
+  errorMessage.value = ''
+  successMessage.value = ''  
+}
+</script>
 
 <style scoped>
 .login__button {
