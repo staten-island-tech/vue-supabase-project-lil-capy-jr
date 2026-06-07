@@ -1,20 +1,21 @@
 <template>
-    <div>
-
-    </div>
+  <div class="money">
+    ${{ currenttotal }}
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
 const props = defineProps({
-  currentTotal: {
+  currenttotal: {
     type: [String, Number],
     required: true
   }
 })
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.money {
+  font-size: 24px;
+  font-weight: bold;
+}
 </style>

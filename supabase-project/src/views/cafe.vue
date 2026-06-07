@@ -1,4 +1,7 @@
 <template>
+  <div class="daycounter">
+    Day {{ day }}
+  </div>
     <div class = "cafe">
         <div class = "customer">
             <CustomerCard/>
@@ -7,10 +10,15 @@
         <div class = "counter">
             <Ingredient :order="order"/>
         </div>
+        <moneyamount :currenttotal = "money"/>
+        <Bill v-if="showbill":day="day":dailyProfit="dailyprofit"@closebill="startnextday"/>
+        <div v-if="!showbill" class="cafe"></div>
     </div>
 </template>
 
 <script setup>
+import moneyamount from '@/components/moneyamount.vue';
+import Bill from '@/components/Bill.vue';
 import CustomerCard from '@/components/CustomerCard.vue';
 import Drink from '@/components/Drink.vue';
 import Ingredient from '@/components/Ingredient.vue';
@@ -65,16 +73,60 @@ function Random(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-const order = ref({
-  base: Random(Base),
-  ingredient: Random(Ingredients),
-  cutsize: Random(Cutsize),
-  shakeintensity: Random(Shakeintensity),
-  cupsize: Random(Cupsize),
-  toppings: Random(Toppings),
-})
+const money = ref(0)
+const day = ref(1)
+const customersserved = ref(0)
+const dailyprofit = ref(0)
+const showbill = ref(false)
+const order = ref({})
+function generatecustomer() {
+  order.value = {
+    base: Random(Base),
+    ingredient: Random(Ingredients),
+    cutsize: Random(Cutsize),
+    shakeintensity: Random(Shakeintensity),
+    cupsize: Random(Cupsize),
+    toppings: Random(Toppings),
+  }
+}
+
+generatecustomer()
+function completeorder() {
+  const subtotal =
+    order.value.base.price +
+    order.value.ingredient.price +
+    order.value.cutsize.price +
+    order.value.shakeintensity.price +
+    order.value.cupsize.price +
+    order.value.toppings.price
+  const total = Number((subtotal * 1.08875).toFixed(2))
+  money.value += total
+  dailyprofit.value += total
+  customersserved.value++
+  if (customersserved.value >= 10) {
+    endday()
+  } else {
+    generatecustomer()
+  }
+}
+function endday() {
+  money.value -= 20
+  showbill.value = true
+}
+function startnextday() {
+  day.value++
+  customersserved.value = 0
+  dailyprofit.value = 0
+  showbill.value = false
+  generatecustomer()
+}
 </script>
 
 <style  scoped>
-
+.daycounter {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+}
 </style>

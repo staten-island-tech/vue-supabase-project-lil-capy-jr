@@ -7,7 +7,7 @@
 
     <h2 class="ingredientstitle">Ingredients</h2>
     <button v-for="item in Ingredients" :key="item.name" @click="selectitem(item)">
-      {{ item.name }} - ${{ item.price }}
+      {{ item.nasme }} - ${{ item.price }}
     </button>
 
     <h2 class="cutsizetitle">Cut Size</h2>
@@ -97,7 +97,7 @@ const selected = ref({
   Toppings: '',
 })
 const result = ref('')
-
+const emit = defineEmits(['drinkcomplete'])
 function selectitem(item) {
   selected.value[item.type] = item.name
 }
@@ -111,6 +111,7 @@ function submitdrink() {
     selected.value.Toppings === props.order.toppings.name
   if (correct) {
     result.value = 'YES!'
+    emit('drinkcomplete')
   } else {
     result.value = 'NO'
   }
