@@ -7,7 +7,7 @@
 
     <h2 class="ingredientstitle">Ingredients</h2>
     <button v-for="item in Ingredients" :key="item.name" @click="selectitem(item)">
-      {{ item.nasme }} - ${{ item.price }}
+      {{ item.name }} - ${{ item.price }}
     </button>
 
     <h2 class="cutsizetitle">Cut Size</h2>
@@ -110,7 +110,7 @@ function submitdrink() {
     selected.value.Cupsize === props.order.cupsize.name &&
     selected.value.Toppings === props.order.toppings.name
   if (correct) {
-    result.value = 'YES!'
+    result.value = 'YES'
     emit('drinkcomplete')
   } else {
     result.value = 'NO'

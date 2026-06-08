@@ -4,11 +4,11 @@
   </div>
     <div class = "cafe">
         <div class = "customer">
-            <CustomerCard/>
-            <Drink :order="order"/>
+            <CustomerCard :key="customersserved"/>
+            <Drink :key="customersserved":order="order"/>
         </div>
         <div class = "counter">
-            <Ingredient :order="order"/>
+           <Ingredient :key="customersserved" :order="order" @drinkcomplete="completeorder" />
         </div>
         <moneyamount :currenttotal = "money"/>
         <Bill v-if="showbill":day="day":dailyProfit="dailyprofit"@closebill="startnextday"/>
