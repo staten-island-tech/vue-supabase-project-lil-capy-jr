@@ -6,6 +6,7 @@
         <RouterLink class="router__link" to="/bill">Bill</RouterLink>
         <RouterLink class="router__link" to="/customercard">Shop</RouterLink>
         <RouterLink class="router__link" to="/drink">Drink</RouterLink>
+        <RouterLink class="router__link" to="/login"> Login </RouterLink>
       </nav>
     </header>
     <main>
@@ -15,22 +16,8 @@
 </template>
 
 <script setup>
-// import { ref, onMounted } from 'vue'
-// import { supabase } from './lib/supabaseClient'
 
-// const instruments = ref([])
-
-// async function getInstruments() {
-//   const { data } = await supabase.from('instruments').select()
-//   instruments.value = data
-// }
-
-// onMounted(() => {
-//    getInstruments()
-// })
 </script>
-
-
 
 <style scoped>
 .router {
