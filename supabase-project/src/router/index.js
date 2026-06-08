@@ -5,32 +5,36 @@ import cafe from '@/views/cafe.vue'
 import shop from '@/views/shop.vue'
 import Drink from '@/components/Drink.vue'
 import Ingredient from '@/components/Ingredient.vue'
-
+import Login from '@/components/Login.vue'
 
 const routes = [
-    {
-    path : '/',
-    component : Home,
+  {
+    path: '/',
+    component: Home,
   },
   {
     path: '/cafe',
-    component : cafe,
+    component: cafe,
   },
   {
     path: '/customercard',
-    component : CustomerCard,
+    component: CustomerCard,
   },
   {
     path: '/shop',
-    component : shop,
+    component: shop,
   },
   {
     path: '/drink',
-    component : Drink,
+    component: Drink,
   },
   {
     path: '/ingredients',
-    component : Ingredient,
+    component: Ingredient,
+  },
+  {
+    path: '/login',
+    component: Login,
   },
 ]
 
