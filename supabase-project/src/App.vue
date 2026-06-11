@@ -3,9 +3,7 @@
     <header>
       <nav class="router">
         <RouterLink class="router__link" to="/">Home</RouterLink>
-        <RouterLink class="router__link" to="/bill">Bill</RouterLink>
-        <RouterLink class="router__link" to="/customercard">Shop</RouterLink>
-        <RouterLink class="router__link" to="/drink">Drink</RouterLink>
+        <RouterLink class="router__link" to="/cafe">Cafe</RouterLink>
         <RouterLink class="router__link" to="/login"> Login </RouterLink>
       </nav>
     </header>
