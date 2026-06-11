@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1>Supabase Login Test</h1>
+    <h1>Supabase Login</h1>
 
     <input v-model="email" type="email" placeholder="Email" />
 
@@ -88,14 +88,18 @@ async function signIn() {
   gap: 1rem;
   width: 300px;
   margin: 2rem auto;
+  text-align: center;
 }
 
 input {
   padding: 0.5rem;
+    font-family: 'Darumadrop One', sans-serif;
+
 }
 
 button {
   padding: 0.5rem;
   cursor: pointer;
+  font-family: 'Darumadrop One', sans-serif;
 }
 </style>
