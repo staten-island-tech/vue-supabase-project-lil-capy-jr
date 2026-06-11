@@ -4,8 +4,6 @@
 
     <input v-model="email" type="email" placeholder="Email" />
 
-    <input v-model="name" type="text" placeholder="Name" />
-
     <input v-model="password" type="password" placeholder="Password" />
 
     <button @click="signUp" :disabled="loading">Sign Up</button>
@@ -93,13 +91,13 @@ async function signIn() {
 
 input {
   padding: 0.5rem;
-    font-family: 'Darumadrop One', sans-serif;
+  font-family: 'Elms Sans', sans-serif;
 
 }
 
 button {
   padding: 0.5rem;
   cursor: pointer;
-  font-family: 'Darumadrop One', sans-serif;
+  font-family: 'Elms Sans', sans-serif;
 }
 </style>
