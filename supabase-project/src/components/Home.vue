@@ -1,11 +1,15 @@
 <template>
   <div class="website">
     <h1 class="website__title">Genshin Impact Capybara Cafe</h1>
+    <p class="daypreview">Day {{ gameStore.day }}</p>
     <RouterLink class="play__button" to="/cafe">Play</RouterLink>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import gamestore from '@/store/gamestore.js';
+const gameStore = useGameStore()
+</script>
 
 <style scoped>
 .website {

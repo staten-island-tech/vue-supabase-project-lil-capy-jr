@@ -110,10 +110,11 @@ function submitdrink() {
     selected.value.Cupsize === props.order.cupsize.name &&
     selected.value.Toppings === props.order.toppings.name
   if (correct) {
-    result.value = 'YES'
+    result.value = 'Correct Order'
+    selected.value = emptySelected()
     emit('drinkcomplete')
   } else {
-    result.value = 'NO'
+    result.value = 'Wrong, try again'
   }
 }
 </script>
@@ -122,63 +123,25 @@ function submitdrink() {
 div {
   text-align: center;
 }
-
-.base__title {
+.basetitle,
+.ingredientstitle,
+.cutsizetitle,
+.shakeintensitytitle,
+.cupsizetitle,
+.toppingstitle {
   text-align: center;
   font-family: 'Darumadrop One', sans-serif;
   font-size: 30px;
   margin: 0;
   text-shadow: 5px 2px 5px black;
 }
-
-.ingredients__title {
-  text-align: center;
-  font-family: 'Darumadrop One', sans-serif;
-  font-size: 30px;
-  margin: 0;
-  text-shadow: 5px 2px 5px black;
-}
-
-.cutsize__title {
-  text-align: center;
-  font-family: 'Darumadrop One', sans-serif;
-  font-size: 30px;
-  margin: 0;
-  text-shadow: 5px 2px 5px black;
-}
-
-.shakeintensity__title {
-  text-align: center;
-  font-family: 'Darumadrop One', sans-serif;
-  font-size: 30px;
-  margin: 0;
-  text-shadow: 5px 2px 5px black;
-}
-
-.cupsize__title {
-  text-align: center;
-  font-family: 'Darumadrop One', sans-serif;
-  font-size: 30px;
-  margin: 0;
-  text-shadow: 5px 2px 5px black;
-}
-
-.toppings__title {
-  text-align: center;
-  font-family: 'Darumadrop One', sans-serif;
-  font-size: 30px;
-  margin: 0;
-  text-shadow: 5px 2px 5px black;
-}
-
-.current__drink {
+.currentdrink {
   text-align: center;
   font-family: 'Darumadrop One', sans-serif;
   font-size: 35px;
   margin: 0;
   text-shadow: 5px 2px 5px black;
 }
-
 button {
   font-family: 'Darumadrop One', sans-serif;
   background-color: #c63b49;
@@ -189,5 +152,9 @@ button {
   margin: 1rem;
   text-decoration: none;
   color: #ffffff;
+}
+button.selected {
+  background-color: #7a1e28;
+  outline: 2px solid #fff;
 }
 </style>
