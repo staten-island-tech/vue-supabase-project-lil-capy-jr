@@ -2,6 +2,7 @@
   <div class="daycounter">
     Day {{ day }}
   </div>
+   <div class="customercounter">Customers: {{ customersserved }} / 10</div>
     <div class = "cafe">
         <div class = "customer">
             <CustomerCard :key="customersserved"/>
@@ -11,8 +12,7 @@
            <Ingredient :key="customersserved" :order="order" @drinkcomplete="completeorder" />
         </div>
         <moneyamount :currenttotal = "money"/>
-        <Bill v-if="showbill":day="day":dailyProfit="dailyprofit"@closebill="startnextday"/>
-        <div v-if="!showbill" class="cafe"></div>
+        <Bill v-if="showbill":day="day":dailyprofit="dailyprofit"@closebill="finishday"/>
     </div>
 </template>
 
@@ -72,8 +72,10 @@ const Toppings = [
 function Random(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
-
-const money = ref(0)
+const money = computed({
+  get: () => gameStore.money,
+  set: (v) => { gameStore.money = v }
+})
 const day = ref(1)
 const customersserved = ref(0)
 const dailyprofit = ref(0)
@@ -100,8 +102,8 @@ function completeorder() {
     order.value.cupsize.price +
     order.value.toppings.price
   const total = Number((subtotal * 1.08875).toFixed(2))
-  money.value += total
-  dailyprofit.value += total
+  money.value = Number((money.value + total).toFixed(2))
+  dailyorofit.value = Number((dailyprofit.value + total).toFixed(2))
   customersserved.value++
   if (customersserved.value >= 10) {
     endday()
@@ -110,23 +112,32 @@ function completeorder() {
   }
 }
 function endday() {
-  money.value -= 20
+  money.value = Number((money.value - 20).toFixed(2))
   showbill.value = true
 }
-function startnextday() {
-  day.value++
-  customersserved.value = 0
+function finishday() {
+  gameStore.nextDay() 
   dailyprofit.value = 0
   showbill.value = false
-  generatecustomer()
+  router.push('/')
 }
 </script>
 
 <style  scoped>
 .daycounter {
-  position: absolute;
+  position: fixed;
   top: 10px;
   right: 10px;
   font-size: 24px;
+  font-family: 'Darumadrop One', sans-serif;
+  z-index: 10;
+}
+.customercounter {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 24px;
+  font-family: 'Darumadrop One', sans-serif;
+  z-index: 10;
 }
 </style>
