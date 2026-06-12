@@ -24,6 +24,12 @@ import Drink from '@/components/Drink.vue';
 import Ingredient from '@/components/Ingredient.vue';
 import { ref } from 'vue'
 
+import { useGameStore } from '@/store/gamestore'
+import { useRouter } from 'vue-router'
+
+const gameStore = useGameStore()
+const router = useRouter()
+
 const Base = [
   { name: 'Milk', price: 2, type: 'base' },
   { name: 'Tea', price: 2, type: 'base' },
