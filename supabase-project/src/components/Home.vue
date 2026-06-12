@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import gamestore from '@/store/gamestore.js';
+import { useGameStore } from '@/store/gamestore'
 const gameStore = useGameStore()
 </script>
 
