@@ -1,8 +1,7 @@
 <template>
   <div class = "characters">
     <div class = "characterimage">
-      <img  v-if="randomcharacter" :src="`https://genshin.jmp.blue/characters/${randomcharacter}/icon`":alt="randomcharacter">
-    </div>
+<img v-if="randomcharacter" :src="`https://genshin.jmp.blue/characters/${randomcharacter}/icon`" :alt="randomcharacter">    </div>
    
     <div class = "characterdrink"></div>
   </div>
@@ -10,6 +9,8 @@
 
 <script setup>
 import { ref, onMounted } from "vue"
+import { gsap } from "gsap"
+
 const characters = ref([])
 const randomcharacter = ref(null)
 async function getcharacters(){
@@ -25,14 +26,34 @@ async function getcharacters(){
 }
 onMounted(() => {
   getcharacters()
-})
 
+  gsap.from(".characters", {
+    opacity: 0,
+    x: -100,
+    duration: 1,
+    ease: "power2.out"
+  })
+})
 
 </script>
 <style scoped>
-img {
+.characters {
+  display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.characterimage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  width: 180px;
+  height: auto;
+
+  object-fit: contain;
 }
 </style>
 

@@ -17,7 +17,9 @@
 <script setup>
 import { ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const name = ref('')
 const email = ref('')
 const password = ref('')
@@ -55,8 +57,9 @@ async function signUp() {
   }
 
   console.log(data)
-  message.value = 'Account created successfully!'
-}
+message.value = 'Account created successfully!'
+
+router.push('/cafe')}
 
 async function signIn() {
   loading.value = true
@@ -74,8 +77,10 @@ async function signIn() {
     return
   }
 
-  console.log(data)
-  message.value = 'Logged in successfully!'
+console.log(data)
+message.value = 'Logged in successfully!'
+
+router.push('/cafe')
 }
 </script>
 

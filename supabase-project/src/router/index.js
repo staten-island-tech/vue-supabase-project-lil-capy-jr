@@ -6,6 +6,7 @@ import shop from '@/views/shop.vue'
 import Drink from '@/components/Drink.vue'
 import Ingredient from '@/components/Ingredient.vue'
 import Login from '@/components/Login.vue'
+import { supabase } from '@/lib/supabaseClient'
 
 const routes = [
   {
@@ -44,3 +45,13 @@ const router = createRouter({
 })
 
 export default router
+
+router.beforeEach(async (to) => {
+  const {
+    data: { session }
+  } = await supabase.auth.getSession()
+
+  if (to.path === '/cafe' && !session) {
+    return '/login'
+  }
+})

@@ -43,13 +43,12 @@ const totalprice = computed(() => {
 
 <style scoped>
 .order__container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-  font-size: 14px;
-  line-height: 14px;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 20px;
+  padding: 1rem;
+  width: 280px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
 .order__container ul {

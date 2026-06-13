@@ -2,18 +2,35 @@
   <div class="daycounter">
     Day {{ day }}
   </div>
-  <div class="customercounter">Customers: {{ customersserved }} / 10</div>
-  <div class="cafe">
-    <div class="customer">
-      <CustomerCard :key="customersserved" />
-      <Drink :key="customersserved" :order="order" />
-    </div>
-    <div class="counter">
-      <Ingredient :key="customersserved" :order="order" @drinkcomplete="completeorder" />
-    </div>
-    <moneyamount :currenttotal="money" />
-    <Bill v-if="showbill" :day="day" :dailyprofit="dailyprofit" @closebill="finishday" />
+<div class="game-layout">
+  <div class="left-panel">
+  <CustomerCard :key="customersserved" />
+
+  <Drink :key="customersserved" :order="order" />
+  <div class="profit-card">
+  <h2>Today's Profit</h2>
+  <p>${{ dailyprofit.toFixed(2) }}</p>
+
+  <h3>Customers Served</h3>
+  <p>{{ customersserved }}/10</p>
+</div>
+</div>
+
+  <div class="right-panel">
+    <Ingredient
+      :key="customersserved"
+      :order="order"
+      @drinkcomplete="completeorder"
+    />
   </div>
+  
+  <Bill
+    v-if="showbill"
+    :day="day"
+    :dailyprofit="dailyprofit"
+    @closebill="finishday"
+  />
+</div>
 </template>
 
 <script setup>
@@ -139,12 +156,49 @@ function finishday() {
   z-index: 10;
 }
 
-.customercounter {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  font-size: 24px;
+.game-layout {
+  display: flex;
+  min-height: 100vh;
+
+  backdrop-filter: blur(2px);
+}
+
+.left-panel {
+  width: 30%;
+  min-width: 350px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+
+  padding: 2rem;
+}
+
+.right-panel {
+  flex: 1;
+  padding: 2rem 3rem;
+  overflow-y: auto;
+}
+
+.profit-card {
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  width: 320px;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.profit-card h2 {
+  margin: 0;
   font-family: 'Darumadrop One', sans-serif;
-  z-index: 10;
+}
+
+.profit-card p {
+  margin-top: 0.5rem;
+  font-size: 2rem;
+  font-weight: bold;
 }
 </style>
