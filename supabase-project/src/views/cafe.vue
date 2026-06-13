@@ -2,18 +2,18 @@
   <div class="daycounter">
     Day {{ day }}
   </div>
-   <div class="customercounter">Customers: {{ customersserved }} / 10</div>
-    <div class = "cafe">
-        <div class = "customer">
-            <CustomerCard :key="customersserved"/>
-            <Drink :key="customersserved":order="order"/>
-        </div>
-        <div class = "counter">
-           <Ingredient :key="customersserved" :order="order" @drinkcomplete="completeorder" />
-        </div>
-        <moneyamount :currenttotal = "money"/>
-        <Bill v-if="showbill":day="day":dailyprofit="dailyprofit"@closebill="finishday"/>
+  <div class="customercounter">Customers: {{ customersserved }} / 10</div>
+  <div class="cafe">
+    <div class="customer">
+      <CustomerCard :key="customersserved" />
+      <Drink :key="customersserved" :order="order" />
     </div>
+    <div class="counter">
+      <Ingredient :key="customersserved" :order="order" @drinkcomplete="completeorder" />
+    </div>
+    <moneyamount :currenttotal="money" />
+    <Bill v-if="showbill" :day="day" :dailyprofit="dailyprofit" @closebill="finishday" />
+  </div>
 </template>
 
 <script setup>
@@ -22,7 +22,7 @@ import Bill from '@/components/Bill.vue';
 import CustomerCard from '@/components/CustomerCard.vue';
 import Drink from '@/components/Drink.vue';
 import Ingredient from '@/components/Ingredient.vue';
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 import { useGameStore } from '@/store/gamestore'
 import { useRouter } from 'vue-router'
@@ -82,7 +82,7 @@ const money = computed({
   get: () => gameStore.money,
   set: (v) => { gameStore.money = v }
 })
-const day = ref(1)
+const day = computed(() => gameStore.day)
 const customersserved = ref(0)
 const dailyprofit = ref(0)
 const showbill = ref(false)
@@ -109,7 +109,7 @@ function completeorder() {
     order.value.toppings.price
   const total = Number((subtotal * 1.08875).toFixed(2))
   money.value = Number((money.value + total).toFixed(2))
-  dailyorofit.value = Number((dailyprofit.value + total).toFixed(2))
+  dailyprofit.value = Number((dailyprofit.value + total).toFixed(2))
   customersserved.value++
   if (customersserved.value >= 10) {
     endday()
@@ -122,14 +122,14 @@ function endday() {
   showbill.value = true
 }
 function finishday() {
-  gameStore.nextDay() 
+  gameStore.nextDay()
   dailyprofit.value = 0
   showbill.value = false
   router.push('/')
 }
 </script>
 
-<style  scoped>
+<style scoped>
 .daycounter {
   position: fixed;
   top: 10px;
@@ -138,6 +138,7 @@ function finishday() {
   font-family: 'Darumadrop One', sans-serif;
   z-index: 10;
 }
+
 .customercounter {
   position: fixed;
   top: 10px;
