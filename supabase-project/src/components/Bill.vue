@@ -11,12 +11,24 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
+import { gsap } from 'gsap'
+
 const props = defineProps({
   day: Number,
   dailyProfit: Number
 })
 
 defineEmits(['closebill'])
+
+onMounted(() => {
+  gsap.from('.bill', {
+    opacity: 0,
+    scale: 0,
+    duration: 0.8,
+    ease: 'back.out(1.7)'
+  })
+})
 </script>
 
 <style scoped>

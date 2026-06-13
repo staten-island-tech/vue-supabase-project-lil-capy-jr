@@ -2,13 +2,30 @@
   <div class="website">
     <h1 class="website__title">Genshin Impact Capybara Cafe</h1>
     <p class="daypreview">Day {{ gameStore.day }}</p>
-    <RouterLink class="play__button" to="/cafe">Play</RouterLink>
-  </div>
+<button class="play__button" @click="playGame">
+  Play
+</button>  </div>
 </template>
 
 <script setup>
 import { useGameStore } from '@/store/gamestore'
+import { useRouter } from 'vue-router'
+import { supabase } from '@/lib/supabaseClient'
+
 const gameStore = useGameStore()
+const router = useRouter()
+
+async function playGame() {
+  const {
+    data: { session }
+  } = await supabase.auth.getSession()
+
+  if (session) {
+    router.push('/cafe')
+  } else {
+    router.push('/login')
+  }
+}
 </script>
 
 <style scoped>
@@ -29,8 +46,7 @@ const gameStore = useGameStore()
   text-shadow: 5px 2px 5px black;
 }
 
-.play__button:link,
-.play__button:visited {
+.play__button {
   font-family: 'Darumadrop One', sans-serif;
   background-color: #c63b49;
   font-size: 25px;

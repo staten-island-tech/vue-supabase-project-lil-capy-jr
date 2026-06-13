@@ -29,6 +29,8 @@
     <button v-for="item in Toppings" :key="item.name" @click="selectitem(item)">
       {{ item.name }}
     </button>
+
+    <div class="currentdrinkbox">
     <h3 class="currentdrink">Current Drink</h3>
     <ul>
       <li>Base: {{ selected.base }}</li>
@@ -38,6 +40,7 @@
       <li>Cup Size: {{ selected.Cupsize }}</li>
       <li>Topping: {{ selected.Toppings }}</li>
     </ul>
+    </div>
     <button @click="submitdrink">Submit</button>
     <h2>{{ result }}</h2>
   </div>
@@ -45,6 +48,8 @@
 
 <script setup>
 import { ref } from 'vue'
+import { gsap } from 'gsap'
+
 const props = defineProps({
   order: Object
 })
@@ -101,6 +106,18 @@ const emit = defineEmits(['drinkcomplete'])
 function selectitem(item) {
   selected.value[item.type] = item.name
 }
+
+function emptySelected() {
+  return {
+    base: '',
+    ingredients: '',
+    Cutsize: '',
+    Shakeintensity: '',
+    Cupsize: '',
+    Toppings: '',
+  }
+}
+
 function submitdrink() {
   const correct =
     selected.value.base === props.order.base.name &&
@@ -109,13 +126,27 @@ function submitdrink() {
     selected.value.Shakeintensity === props.order.shakeintensity.name &&
     selected.value.Cupsize === props.order.cupsize.name &&
     selected.value.Toppings === props.order.toppings.name
-  if (correct) {
-    result.value = 'Correct Order'
-    selected.value = emptySelected()
-    emit('drinkcomplete')
-  } else {
-    result.value = 'Wrong, try again'
-  }
+if (correct) {
+  result.value = 'Correct Order'
+
+  gsap.fromTo(
+    '.currentdrink',
+    {
+      scale: 1,
+      rotation: 0
+    },
+    {
+      scale: 1.3,
+      rotation: 10,
+      duration: 0.4,
+      yoyo: true,
+      repeat: 1
+    }
+  )
+
+  selected.value = emptySelected()
+  emit('drinkcomplete')
+}
 }
 </script>
 
@@ -123,38 +154,63 @@ function submitdrink() {
 div {
   text-align: center;
 }
+
 .basetitle,
 .ingredientstitle,
 .cutsizetitle,
 .shakeintensitytitle,
 .cupsizetitle,
 .toppingstitle {
-  text-align: center;
-  font-family: 'Darumadrop One', sans-serif;
-  font-size: 30px;
-  margin: 0;
-  text-shadow: 5px 2px 5px black;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 20px;
 }
-.currentdrink {
-  text-align: center;
-  font-family: 'Darumadrop One', sans-serif;
-  font-size: 35px;
-  margin: 0;
-  text-shadow: 5px 2px 5px black;
-}
+
 button {
   font-family: 'Darumadrop One', sans-serif;
-  background-color: #c63b49;
-  font-size: 15px;
-  border-radius: 1rem;
-  border-color: transparent;
-  padding: 0 30px 7px 30px;
-  margin: 1rem;
-  text-decoration: none;
-  color: #ffffff;
+  background: rgba(198, 59, 73, 0.9);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  margin: 0.3rem;
+  min-width: 140px;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
+
+button:hover {
+  transform: translateY(-2px);
+}
+
 button.selected {
   background-color: #7a1e28;
   outline: 2px solid #fff;
+}
+
+
+.currentdrinkbox {
+  width: 350px;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  margin: 1rem auto;
+}
+
+.currentdrinkbox ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.currentdrink {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.currentdrinkbox li {
+  font-size: 1rem;
+  margin: 0.3rem 0;
 }
 </style>
