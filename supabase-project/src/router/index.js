@@ -6,7 +6,6 @@ import Drink from '@/components/Drink.vue'
 import Ingredient from '@/components/Ingredient.vue'
 import Login from '@/components/Login.vue'
 import { supabase } from '@/lib/supabaseClient'
-import Stats from '@/components/Stats.vue'
 
 const routes = [
   {
@@ -33,10 +32,6 @@ const routes = [
     path: '/login',
     component: Login,
   },
-  {
-    path: '/stats',
-    component: Stats,
-  }
 ]
 
 const router = createRouter({
