@@ -25,6 +25,26 @@ async function playGame() {
     router.push('/login')
   }
 }
+
+async function loadSave() {
+  const { data: { session } } = await supabase.auth.getSession()
+
+  const { data, error } = await supabase
+    .from('games')
+    .select('*')
+    .eq('user_id', session.user.id)
+    .order('id', { ascending: false })
+    .limit(1)
+    .single()
+
+  if (error) {
+    console.log('No save found:', error)
+    return
+  }
+
+  gameStore.day = data.day
+  gameStore.money = data.money
+}
 </script>
 
 <style scoped>

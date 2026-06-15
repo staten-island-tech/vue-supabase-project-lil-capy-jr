@@ -1,20 +1,17 @@
 <template>
-  <div class="daycounter">
-    Day {{ day }}
-  </div>
-<div class="game-layout">
+ <div class="game-layout" v-if="!showbill">
   <div class="left-panel">
-  <CustomerCard :key="customersserved" />
+    <CustomerCard :key="customersserved" />
+    <Drink :key="customersserved" :order="order" />
 
-  <Drink :key="customersserved" :order="order" />
-  <div class="profit-card">
-  <h2>Today's Profit</h2>
-  <p>${{ dailyprofit.toFixed(2) }}</p>
+    <div class="profit-card">
+      <h2>Today's Profit</h2>
+      <p>${{ dailyprofit.toFixed(2) }}</p>
 
-  <h3>Customers Served</h3>
-  <p>{{ customersserved }}/5</p>
-</div>
-</div>
+      <h3>Customers Served</h3>
+      <p>{{ customersserved }}/5</p>
+    </div>
+  </div>
 
   <div class="right-panel">
     <Ingredient
@@ -23,28 +20,35 @@
       @drinkcomplete="completeorder"
     />
   </div>
-  
-  <Bill
-  v-if="showbill"
+</div>
+
+<Bill
+  v-else
   :day="day"
   :dailyProfit="dailyprofit"
   @closebill="finishday"
 />
-</div>
 </template>
 
 <script setup>
-import Bill from '@/components/Bill.vue';
+import Bill from '@/components/Bill.vue'
 import { supabase } from '@/lib/supabaseClient'
-import CustomerCard from '@/components/CustomerCard.vue';
-import Drink from '@/components/Drink.vue';
-import Ingredient from '@/components/Ingredient.vue';
-import { ref, computed } from 'vue'
+import CustomerCard from '@/components/CustomerCard.vue'
+import Drink from '@/components/Drink.vue'
+import Ingredient from '@/components/Ingredient.vue'
+import { ref, computed, onMounted } from 'vue'
 import { useGameStore } from '@/store/gamestore'
 import { useRouter } from 'vue-router'
 
 const gameStore = useGameStore()
 const router = useRouter()
+
+const day = computed(() => gameStore.day)
+
+const customersserved = ref(0)
+const dailyprofit = ref(0)
+const showbill = ref(false)
+const order = ref({})
 
 const Base = [
   { name: 'Milk', price: 2, type: 'base' },
@@ -94,15 +98,11 @@ const Toppings = [
 function Random(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
-const money = computed({
-  get: () => gameStore.money,
-  set: (v) => { gameStore.money = v }
-})
-const day = computed(() => gameStore.day)
-const customersserved = ref(0)
-const dailyprofit = ref(0)
-const showbill = ref(false)
-const order = ref({})
+
+function addMoney(amount) {
+  gameStore.money = Number((gameStore.money + amount).toFixed(2))
+}
+
 function generatecustomer() {
   order.value = {
     base: Random(Base),
@@ -115,13 +115,11 @@ function generatecustomer() {
 }
 
 generatecustomer()
+
 async function completeorder() {
   if (customersserved.value >= 5) return
 
-  const {
-    data: { session }
-  } = await supabase.auth.getSession()
-
+  const { data: { session } } = await supabase.auth.getSession()
   if (!session) return
 
   const subtotal =
@@ -134,24 +132,20 @@ async function completeorder() {
 
   const total = Number((subtotal * 1.08875).toFixed(2))
 
-  const { error: drinkError } = await supabase
-    .from('drinks')
-    .insert([
-      {
-        user_id: session.user.id,
-        base: order.value.base.name,
-        ingredient: order.value.ingredient.name,
-        cutsize: order.value.cutsize.name,
-        shakeintensity: order.value.shakeintensity.name,
-        cupsize: order.value.cupsize.name,
-        toppings: order.value.toppings.name,
-        price: total,
-      },
-    ])
+  await supabase.from('drinks').insert([
+    {
+      user_id: session.user.id,
+      base: order.value.base.name,
+      ingredient: order.value.ingredient.name,
+      cutsize: order.value.cutsize.name,
+      shakeintensity: order.value.shakeintensity.name,
+      cupsize: order.value.cupsize.name,
+      toppings: order.value.toppings.name,
+      price: total,
+    },
+  ])
 
-  console.log('drink error:', drinkError)
-
-  money.value = Number((money.value + total).toFixed(2))
+  addMoney(total)
   dailyprofit.value = Number((dailyprofit.value + total).toFixed(2))
 
   customersserved.value++
@@ -162,44 +156,85 @@ async function completeorder() {
     generatecustomer()
   }
 }
+
 function endday() {
-  money.value = Number((money.value - 20).toFixed(2))
+  gameStore.money = Number((gameStore.money - 20).toFixed(2))
   showbill.value = true
 }
-async function finishday() {
-  const {
-    data: { session }
-  } = await supabase.auth.getSession()
 
-  await supabase
-    .from('profiles')
-    .update({
-      current_day: day.value + 1,
-      current_money: money.value
-    })
-    .eq('id', session.user.id)
+async function finishday() {
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) return
+
+  const nextDay = gameStore.day + 1
 
   const { data, error } = await supabase
-    .from('games')
-    .insert([
-      {
-        user_id: session.user.id,
-        day: day.value,
-        customers_served: customersserved.value,
-        money: money.value,
-      },
-    ])
+    .from('profiles')
+    .upsert({
+      id: session.user.id,
+      current_day: nextDay,
+      current_money: gameStore.money
+    })
     .select()
 
-  console.log('data:', data)
-  console.log('error:', error)
+  console.log('SAVE DATA:', data)
+  console.log('SAVE ERROR:', error)
+
+  if (error) return
 
   gameStore.nextDay()
+
   dailyprofit.value = 0
   customersserved.value = 0
   showbill.value = false
+
   router.push('/')
 }
+
+async function loadSave() {
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) return
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('current_day, current_money')
+    .eq('id', session.user.id)
+    .single()
+
+  console.log('LOAD DATA:', data)
+  console.log('LOAD ERROR:', error)
+
+  if (error || !data) return
+
+  gameStore.day = data.current_day ?? 1
+  gameStore.money = data.current_money ?? 0
+}
+
+async function ensureProfile(session) {
+  const { data, error } = await supabase
+    .from('profiles')
+    .upsert({
+      id: session.user.id,
+      email: session.user.email,
+      current_day: 1,
+      current_money: 0
+    })
+    .select()
+
+  console.log('PROFILE INIT:', data)
+  console.log('PROFILE INIT ERROR:', error)
+}
+
+onMounted(async () => {
+  const { data: { session } } = await supabase.auth.getSession()
+
+  if (!session) return
+
+  await ensureProfile(session)
+  await loadSave()
+
+  generatecustomer()
+})
 </script>
 
 <style scoped>

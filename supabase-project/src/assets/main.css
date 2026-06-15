@@ -7,3 +7,12 @@ body {
   color: white;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#app {
+  position: relative;
+  z-index: 0;
+}
