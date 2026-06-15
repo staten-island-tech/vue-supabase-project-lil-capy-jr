@@ -12,7 +12,7 @@
   <p>${{ dailyprofit.toFixed(2) }}</p>
 
   <h3>Customers Served</h3>
-  <p>{{ customersserved }}/10</p>
+  <p>{{ customersserved }}/5</p>
 </div>
 </div>
 
@@ -25,11 +25,11 @@
   </div>
   
   <Bill
-    v-if="showbill"
-    :day="day"
-    :dailyprofit="dailyprofit"
-    @closebill="finishday"
-  />
+  v-if="showbill"
+  :day="day"
+  :dailyProfit="dailyprofit"
+  @closebill="finishday"
+/>
 </div>
 </template>
 
@@ -117,6 +117,8 @@ function generatecustomer() {
 
 generatecustomer()
 function completeorder() {
+  if (customersserved.value >= 5)
+   return
   const subtotal =
     order.value.base.price +
     order.value.ingredient.price +
@@ -128,7 +130,7 @@ function completeorder() {
   money.value = Number((money.value + total).toFixed(2))
   dailyprofit.value = Number((dailyprofit.value + total).toFixed(2))
   customersserved.value++
-  if (customersserved.value >= 10) {
+  if (customersserved.value >= 5) {
     endday()
   } else {
     generatecustomer()
