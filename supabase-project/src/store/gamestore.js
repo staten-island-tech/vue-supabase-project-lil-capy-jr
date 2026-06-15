@@ -18,11 +18,11 @@ export const useGameStore = defineStore('game', () => {
     money.value = 0
   }
 
-  return {
-    day,
-    money,
-    theme,
-    nextDay,
-    resetForNewGame
-  }
+return {
+  day,
+  money,
+  theme,
+  nextDay,
+  resetForNewGame
+}
 })

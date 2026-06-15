@@ -115,9 +115,15 @@ function generatecustomer() {
 }
 
 generatecustomer()
-function completeorder() {
-  if (customersserved.value >= 5)
-   return
+async function completeorder() {
+  if (customersserved.value >= 5) return
+
+  const {
+    data: { session }
+  } = await supabase.auth.getSession()
+
+  if (!session) return
+
   const subtotal =
     order.value.base.price +
     order.value.ingredient.price +
@@ -125,10 +131,31 @@ function completeorder() {
     order.value.shakeintensity.price +
     order.value.cupsize.price +
     order.value.toppings.price
+
   const total = Number((subtotal * 1.08875).toFixed(2))
+
+  const { error: drinkError } = await supabase
+    .from('drinks')
+    .insert([
+      {
+        user_id: session.user.id,
+        base: order.value.base.name,
+        ingredient: order.value.ingredient.name,
+        cutsize: order.value.cutsize.name,
+        shakeintensity: order.value.shakeintensity.name,
+        cupsize: order.value.cupsize.name,
+        toppings: order.value.toppings.name,
+        price: total,
+      },
+    ])
+
+  console.log('drink error:', drinkError)
+
   money.value = Number((money.value + total).toFixed(2))
   dailyprofit.value = Number((dailyprofit.value + total).toFixed(2))
+
   customersserved.value++
+
   if (customersserved.value >= 5) {
     endday()
   } else {
@@ -140,13 +167,33 @@ function endday() {
   showbill.value = true
 }
 async function finishday() {
-  const { data: { session } } = await supabase.auth.getSession()
-  await supabase.from('games').insert([{
-  user_id: session.user.id,
-  day: day.value,
-  customers_served: customersserved.value,
-  money: money.value,
-}])
+  const {
+    data: { session }
+  } = await supabase.auth.getSession()
+
+  await supabase
+    .from('profiles')
+    .update({
+      current_day: day.value + 1,
+      current_money: money.value
+    })
+    .eq('id', session.user.id)
+
+  const { data, error } = await supabase
+    .from('games')
+    .insert([
+      {
+        user_id: session.user.id,
+        day: day.value,
+        customers_served: customersserved.value,
+        money: money.value,
+      },
+    ])
+    .select()
+
+  console.log('data:', data)
+  console.log('error:', error)
+
   gameStore.nextDay()
   dailyprofit.value = 0
   customersserved.value = 0

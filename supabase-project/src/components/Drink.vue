@@ -3,24 +3,12 @@
     <div class="order__container">
       <h2>Order</h2>
       <ul>
-        <h3>
-          <normal>Base: {{ order.base.name }}</normal>
-        </h3>
-        <h3>
-          <normal>Ingredients: {{ order.ingredient.name }}</normal>
-        </h3>
-        <h3>
-          <normal>Cut Size: {{ order.cutsize.name }}</normal>
-        </h3>
-        <h3>
-          <normal>Shake Intensity: {{ order.shakeintensity.name }}</normal>
-        </h3>
-        <h3>
-          <normal>Cup Size: {{ order.cupsize.name }}</normal>
-        </h3>
-        <h3>
-          <normal>Toppings: {{ order.toppings.name }}</normal>
-        </h3>
+        <h3>Base: {{ order.base.name }}</h3>
+        <h3>Ingredients: {{ order.ingredient.name }}</h3>
+        <h3>Cut Size: {{ order.cutsize.name }}</h3>
+        <h3>Shake Intensity: {{ order.shakeintensity.name }}</h3>
+        <h3>Cup Size: {{ order.cupsize.name }}</h3>
+        <h3>Toppings: {{ order.toppings.name }}</h3>
         <h2>Total = ${{ totalprice }}</h2>
       </ul>
     </div>
