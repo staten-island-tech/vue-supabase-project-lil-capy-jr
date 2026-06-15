@@ -34,13 +34,12 @@
 </template>
 
 <script setup>
-import moneyamount from '@/components/moneyamount.vue';
 import Bill from '@/components/Bill.vue';
+import { supabase } from '@/lib/supabaseClient'
 import CustomerCard from '@/components/CustomerCard.vue';
 import Drink from '@/components/Drink.vue';
 import Ingredient from '@/components/Ingredient.vue';
 import { ref, computed } from 'vue'
-
 import { useGameStore } from '@/store/gamestore'
 import { useRouter } from 'vue-router'
 
@@ -142,12 +141,12 @@ function endday() {
 }
 async function finishday() {
   const { data: { session } } = await supabase.auth.getSession()
-  await supabase.from('game_sessions').insert([{
-    user_id: session.user.id,
-    day: day.value,
-    customers_served: customersserved.value,
-    money: money.value,
-  }])
+  await supabase.from('games').insert([{
+  user_id: session.user.id,
+  day: day.value,
+  customers_served: customersserved.value,
+  money: money.value,
+}])
   gameStore.nextDay()
   dailyprofit.value = 0
   customersserved.value = 0
