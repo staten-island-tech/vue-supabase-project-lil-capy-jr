@@ -3,7 +3,6 @@
     <h1 class="website__title">Genshin Impact Capybara Cafe</h1>
     <p class="daypreview">Day {{ gameStore.day }}</p>
 <button class="play__button" @click="playGame">Play</button>
-<button class="play__button" @click="$router.push('/stats')"> Stats </button>
 </div>
 </template>
 
