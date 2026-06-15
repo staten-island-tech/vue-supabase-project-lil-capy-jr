@@ -141,6 +141,7 @@ function endday() {
 function finishday() {
   gameStore.nextDay()
   dailyprofit.value = 0
+  customersserved.value = 0
   showbill.value = false
   router.push('/')
 }
