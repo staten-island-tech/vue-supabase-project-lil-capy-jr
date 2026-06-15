@@ -1,16 +1,30 @@
 <template>
   <div class="login">
-    <h1>Supabase Login</h1>
+    <h1>Login</h1>
 
-    <input v-model="email" type="email" placeholder="Email" />
+    <input
+      v-model="email"
+      type="email"
+      placeholder="Email"
+    />
 
-    <input v-model="password" type="password" placeholder="Password" />
+    <input
+      v-model="password"
+      type="password"
+      placeholder="Password"
+    />
 
-    <button @click="signUp" :disabled="loading">Sign Up</button>
+    <button @click="signUp" :disabled="loading">
+      Sign Up
+    </button>
 
-    <button @click="signIn" :disabled="loading">Log In</button>
+    <button @click="signIn" :disabled="loading">
+      Log In
+    </button>
 
-    <p v-if="message">{{ message }}</p>
+    <p v-if="message">
+      {{ message }}
+    </p>
   </div>
 </template>
 
@@ -18,69 +32,108 @@
 import { ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 import { useRouter } from 'vue-router'
+import { useGameStore } from '@/store/gamestore'
 
 const router = useRouter()
-const name = ref('')
+const gameStore = useGameStore()
 const email = ref('')
 const password = ref('')
-const message = ref('')
 const loading = ref(false)
+const message = ref('')
 
 async function signUp() {
+  if (!email.value || !password.value) {
+  message.value = 'Please fill out all fields.'
+  return
+}
   loading.value = true
   message.value = ''
 
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } =
+  await supabase.auth.signUp({
     email: email.value,
     password: password.value,
   })
 
-  loading.value = false
+if (error) {
+  message.value = error.message
+  return
+}
+
+await supabase
+  .from('profiles')
+  .insert([
+    {
+      id: data.user.id,
+      email: email.value,
+      name: email.value.split('@')[0],
+    }
+  ])
 
   if (error) {
+    loading.value = false
     message.value = error.message
     return
   }
 
-  if (!error) {
-    const { error: profileError } = await supabase.from('profiles').insert([
+  const { error: profileError } = await supabase
+    .from('profiles')
+    .insert([
       {
         id: data.user.id,
-        name: name.value,
         email: email.value,
       },
     ])
 
-    if (profileError) {
-      console.error(profileError)
-    }
+  console.log('profile error:', profileError)
+
+  loading.value = false
+
+  if (profileError) {
+    message.value = profileError.message
+    return
   }
 
-  console.log(data)
-message.value = 'Account created successfully!'
-
-router.push('/cafe')}
-
+  message.value = 'Account created successfully!'
+}
 async function signIn() {
   loading.value = true
   message.value = ''
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: email.value,
-    password: password.value,
-  })
+  try {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.value,
+      password: password.value,
+    })
 
-  loading.value = false
+    if (error) {
+      message.value = error.message
+      return
+    }
 
-  if (error) {
-    message.value = error.message
-    return
+    const {
+      data: { session }
+    } = await supabase.auth.getSession()
+
+    const { data } = await supabase
+      .from('profiles')
+      .select('current_day, current_money')
+      .eq('id', session.user.id)
+      .single()
+
+    if (data) {
+      gameStore.day = data.current_day
+      gameStore.money = Number(data.current_money)
+    }
+
+    message.value = 'Logged in successfully!'
+    router.push('/cafe')
+  } catch (err) {
+    console.error(err)
+    message.value = 'Something went wrong.'
+  } finally {
+    loading.value = false
   }
-
-console.log(data)
-message.value = 'Logged in successfully!'
-
-router.push('/cafe')
 }
 </script>
 
@@ -97,7 +150,6 @@ router.push('/cafe')
 input {
   padding: 0.5rem;
   font-family: 'Elms Sans', sans-serif;
-
 }
 
 button {
