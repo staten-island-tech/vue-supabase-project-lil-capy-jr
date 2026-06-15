@@ -140,7 +140,14 @@ function endday() {
   money.value = Number((money.value - 20).toFixed(2))
   showbill.value = true
 }
-function finishday() {
+async function finishday() {
+  const { data: { session } } = await supabase.auth.getSession()
+  await supabase.from('game_sessions').insert([{
+    user_id: session.user.id,
+    day: day.value,
+    customers_served: customersserved.value,
+    money: money.value,
+  }])
   gameStore.nextDay()
   dailyprofit.value = 0
   customersserved.value = 0
