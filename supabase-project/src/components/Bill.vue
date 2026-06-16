@@ -1,14 +1,11 @@
 <template>
-  <div class="bill" @click="close">
+  <div class="bill" @click="$emit('closebill')">
     <h1>Day {{ day }} Complete</h1>
-
     <h2>Earned: ${{ dailyProfit.toFixed(2) }}</h2>
-
     <h2>
       Net Profit:
       ${{ (dailyProfit - 20).toFixed(2) }}
     </h2>
-
     <p>Click to continue</p>
   </div>
 </template>
@@ -22,11 +19,7 @@ const props = defineProps({
   dailyProfit: Number
 })
 
-const emit = defineEmits(['closebill'])
-
-function close() {
-  emit('closebill')
-}
+defineEmits(['closebill'])
 
 onMounted(() => {
   gsap.from('.bill', {
@@ -42,17 +35,13 @@ onMounted(() => {
 .bill {
   position: fixed;
   inset: 0;
-  z-index: 2147483647; /* max safe z-index */
-
-  background: rgba(0, 0, 0, 0.9);
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 100;
   cursor: pointer;
-
-  pointer-events: auto;
+  color: white;
 }
 </style>
