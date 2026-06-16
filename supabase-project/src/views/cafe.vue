@@ -1,33 +1,32 @@
 <template>
- <div class="game-layout" v-if="!showbill">
-  <div class="left-panel">
-    <CustomerCard :key="customersserved" />
-    <Drink :key="customersserved" :order="order" />
+  <div>
+    <div class="game-layout" v-if="!showbill">
+      <div class="left-panel">
+        <CustomerCard :key="customersserved" />
+        <Drink :key="customersserved" :order="order" />
+        <div class="profit-card">
+          <h2>Today's Profit</h2>
+          <p>${{ dailyprofit.toFixed(2) }}</p>
 
-    <div class="profit-card">
-      <h2>Today's Profit</h2>
-      <p>${{ dailyprofit.toFixed(2) }}</p>
-
-      <h3>Customers Served</h3>
-      <p>{{ customersserved }}/5</p>
+          <h3>Customers Served</h3>
+          <p>{{ customersserved }}/5</p>
+        </div>
+      </div>
+      <div class="right-panel">
+        <Ingredient
+          :key="customersserved"
+          :order="order"
+          @drinkcomplete="completeorder"
+        />
+      </div>
     </div>
-  </div>
-
-  <div class="right-panel">
-    <Ingredient
-      :key="customersserved"
-      :order="order"
-      @drinkcomplete="completeorder"
+    <Bill
+      v-else
+      :day="day"
+      :dailyProfit="dailyprofit"
+      @closebill="finishday"
     />
   </div>
-</div>
-
-<Bill
-  v-else
-  :day="day"
-  :dailyProfit="dailyprofit"
-  @closebill="finishday"
-/>
 </template>
 
 <script setup>
@@ -211,18 +210,19 @@ async function loadSave() {
 }
 
 async function ensureProfile(session) {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from('profiles')
-    .upsert({
+    .select('id')
+    .eq('id', session.user.id)
+    .single()
+  if (!data) {
+    await supabase.from('profiles').insert({
       id: session.user.id,
       email: session.user.email,
       current_day: 1,
       current_money: 0
     })
-    .select()
-
-  console.log('PROFILE INIT:', data)
-  console.log('PROFILE INIT ERROR:', error)
+  }
 }
 
 onMounted(async () => {
